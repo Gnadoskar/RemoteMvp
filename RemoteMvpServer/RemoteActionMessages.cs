@@ -17,11 +17,14 @@ namespace RemoteMvpLib
 
         public string Password { get; }
 
-        public RemoteActionRequest(ActionType type, string username, string password)
+        public bool AdminCheck { get; }
+
+        public RemoteActionRequest(ActionType type, string username, string password,bool admin)
         {
             Type = type;
             UserName = username;
             Password = password;
+            AdminCheck = admin;
         }
     }
 
