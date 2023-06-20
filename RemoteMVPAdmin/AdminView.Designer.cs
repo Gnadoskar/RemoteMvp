@@ -31,6 +31,8 @@
             _UserListBox = new ListBox();
             label1 = new Label();
             _btnDeleteUser = new Button();
+            _btnConnect = new Button();
+            label2 = new Label();
             SuspendLayout();
             // 
             // _UserListBox
@@ -60,11 +62,32 @@
             _btnDeleteUser.Text = "Delete User";
             _btnDeleteUser.UseVisualStyleBackColor = true;
             // 
+            // _btnConnect
+            // 
+            _btnConnect.Location = new Point(431, 37);
+            _btnConnect.Name = "_btnConnect";
+            _btnConnect.Size = new Size(75, 23);
+            _btnConnect.TabIndex = 3;
+            _btnConnect.Text = "Connect";
+            _btnConnect.UseVisualStyleBackColor = true;
+            _btnConnect.Click += _btnConnect_Click;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(341, 9);
+            label2.Name = "label2";
+            label2.Size = new Size(165, 15);
+            label2.TabIndex = 4;
+            label2.Text = "Press to connect to the server:";
+            // 
             // AdminView
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(546, 272);
+            ClientSize = new Size(535, 272);
+            Controls.Add(label2);
+            Controls.Add(_btnConnect);
             Controls.Add(_btnDeleteUser);
             Controls.Add(label1);
             Controls.Add(_UserListBox);
@@ -79,5 +102,7 @@
         private ListBox _UserListBox;
         private Label label1;
         private Button _btnDeleteUser;
+        private Button _btnConnect;
+        private Label label2;
     }
 }

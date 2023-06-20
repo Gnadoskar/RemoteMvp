@@ -6,7 +6,8 @@ namespace RemoteMvpLib
     {
         Register,
         Login,
-        Logout
+        Logout,
+        Admin
     }
 
     public class RemoteActionRequest
@@ -19,12 +20,11 @@ namespace RemoteMvpLib
 
         public bool AdminCheck { get; }
 
-        public RemoteActionRequest(ActionType type, string username, string password,bool admin)
+        public RemoteActionRequest(ActionType type, string username, string password)
         {
             Type = type;
             UserName = username;
-            Password = password;
-            AdminCheck = admin;
+            Password = password;            
         }
     }
 
