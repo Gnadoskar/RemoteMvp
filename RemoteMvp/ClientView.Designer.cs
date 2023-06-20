@@ -96,12 +96,13 @@
             // _adminCheck
             // 
             _adminCheck.AutoSize = true;
-            _adminCheck.Location = new Point(98, 61);
+            _adminCheck.Location = new Point(120, 61);
             _adminCheck.Name = "_adminCheck";
             _adminCheck.Size = new Size(62, 19);
             _adminCheck.TabIndex = 5;
             _adminCheck.Text = "Admin";
             _adminCheck.UseVisualStyleBackColor = true;
+            _adminCheck.CheckedChanged += _adminCheck_CheckedChanged;
             // 
             // ClientView
             // 

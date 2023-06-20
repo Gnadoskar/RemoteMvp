@@ -7,6 +7,7 @@ namespace RemoteMvpClient
 
         public event EventHandler<Tuple<string, string>> LoginRequested;
         public event EventHandler<Tuple<string, string>> RegisterRequested;
+        private bool _checkAdminBoxState = false;
 
         public ClientView()
         {
@@ -16,6 +17,7 @@ namespace RemoteMvpClient
         private void login_Click(object sender, EventArgs e)
         {
             LoginRequested?.Invoke(sender, new Tuple<string, string>(tbUsername.Text, tbPassword.Text));
+           
         }
 
         private void register_Click(object sender, EventArgs e)
@@ -65,6 +67,21 @@ namespace RemoteMvpClient
                 button1.Enabled = false;
                 button2.Enabled = false;
             }
+        }
+
+        private void _adminCheck_CheckedChanged(object sender, EventArgs e)
+        {
+            if(!_checkAdminBoxState)
+            {
+                _checkAdminBoxState = true;
+            }
+            else
+            {
+                _checkAdminBoxState = false;
+            }
+          
+
+            
         }
     }
 }
