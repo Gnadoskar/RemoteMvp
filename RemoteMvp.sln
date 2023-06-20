@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RemoteMvpLib", "RemoteMvpSe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RemoteMvpApp", "RemoteMvpApp\RemoteMvpApp.csproj", "{730368CF-7ACB-4E2A-8DF9-0C924D52148F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemoteMVPAdmin", "RemoteMVPAdmin\RemoteMVPAdmin.csproj", "{1D2B2410-E316-4726-9BFA-0A605491350B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{730368CF-7ACB-4E2A-8DF9-0C924D52148F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{730368CF-7ACB-4E2A-8DF9-0C924D52148F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{730368CF-7ACB-4E2A-8DF9-0C924D52148F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D2B2410-E316-4726-9BFA-0A605491350B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D2B2410-E316-4726-9BFA-0A605491350B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D2B2410-E316-4726-9BFA-0A605491350B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D2B2410-E316-4726-9BFA-0A605491350B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

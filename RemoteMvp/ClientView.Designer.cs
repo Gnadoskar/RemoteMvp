@@ -34,6 +34,7 @@
             tbPassword = new TextBox();
             label1 = new Label();
             label2 = new Label();
+            _adminCheck = new CheckBox();
             SuspendLayout();
             // 
             // button1
@@ -92,11 +93,22 @@
             label2.TabIndex = 4;
             label2.Text = "Password";
             // 
+            // _adminCheck
+            // 
+            _adminCheck.AutoSize = true;
+            _adminCheck.Location = new Point(98, 61);
+            _adminCheck.Name = "_adminCheck";
+            _adminCheck.Size = new Size(62, 19);
+            _adminCheck.TabIndex = 5;
+            _adminCheck.Text = "Admin";
+            _adminCheck.UseVisualStyleBackColor = true;
+            // 
             // ClientView
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(284, 181);
+            Controls.Add(_adminCheck);
             Controls.Add(label2);
             Controls.Add(label1);
             Controls.Add(tbPassword);
@@ -117,5 +129,6 @@
         private TextBox tbPassword;
         private Label label1;
         private Label label2;
+        private CheckBox _adminCheck;
     }
 }
