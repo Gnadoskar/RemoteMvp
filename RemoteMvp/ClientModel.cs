@@ -21,7 +21,7 @@ namespace RemoteMvpClient
             PreName = preName;
             Birthday = birthday;
         }
-
+        // Hallo geht jz?
         
     }
 }
