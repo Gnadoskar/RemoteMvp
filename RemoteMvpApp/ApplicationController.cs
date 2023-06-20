@@ -39,11 +39,15 @@ namespace RemoteMvpApp
             var handler = (RemoteActionEndpoint)sender;
             switch (request.Type)
             {
+                
                 case ActionType.Login:
                     Process_Login(handler, request.UserName, request.Password);
                     break;
                 case ActionType.Register:
                     Process_Register(handler, request.UserName, request.Password);
+                    break;
+                case ActionType.Admin:
+                    Process_Admin(handler, request.UserName, request.Password);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException("Request not supported");
@@ -87,6 +91,18 @@ namespace RemoteMvpApp
                     break;
             }
         }
+
+        private void Process_Admin(RemoteActionEndpoint handler, string username, string password)
+        {
+            // get the userlist
+            // write it to the listbox
+
+
+        }
+
+
+
+
 
         /// <summary>
         /// Helper method to parse semicolon-separated key=value pairs
