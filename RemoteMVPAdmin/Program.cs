@@ -1,3 +1,5 @@
+using RemoteMvpLib;
+
 namespace RemoteMVPAdmin
 {
     internal static class Program
@@ -12,6 +14,16 @@ namespace RemoteMVPAdmin
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             Application.Run(new AdminView());
+
+           
+            var client = new RemoteActionAdapter("localhost", 11000);
+            var clientController = new AdminPresenter(client);
+            clientController.OpenUI(true);
         }
+
+
+
+
+    }
     }
 }

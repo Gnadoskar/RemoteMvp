@@ -1,12 +1,23 @@
-﻿using System;
+﻿using RemoteMvpLib;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace RemoteMVPAdmin
-{
-    internal class AdminPresenter
+{    
+    public class AdminPresenter
     {
+        private readonly IActionAdapter _adapter;
+
+        public AdminPresenter(IActionAdapter adapter)
+        {
+            _adapter = adapter;
+
+
+            
+        }
+
     }
 }
