@@ -47,7 +47,19 @@ namespace RemoteMVPAdmin
 
         }
 
+        public void OpenUI(bool isModal)
+        {
+            if (isModal)
+            {
+                _adminView.ShowDialog();
+            }
+            else
+            {
+                _adminView.Show();
+            }
 
+
+        }
 
 
 

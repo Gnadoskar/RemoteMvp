@@ -16,14 +16,14 @@ namespace RemoteMVPAdmin
             Application.Run(new AdminView());
 
            
-            var client = new RemoteActionAdapter("localhost", 11000);
-            var clientController = new AdminPresenter(client);
-            clientController.OpenUI(true);
+            //var client = new RemoteActionAdapter("localhost", 11000);
+            //var clientController = new AdminPresenter(client);
+            //clientController.OpenUI(true);
         }
 
 
 
 
-    }
+    
     }
 }

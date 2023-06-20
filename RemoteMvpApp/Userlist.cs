@@ -21,7 +21,7 @@ namespace RemoteMvpApp
         private record User(string UserName, string Password);
 
         private List<User> _users;  // Liste der Benutzer
-        private string _csvFilePath;  // Pfad zur CSV-Datei
+        private string _csvFilePath;   // Pfad zur CSV-Datei
 
         public Userlist(string csvFilePath)
         {
@@ -78,19 +78,29 @@ namespace RemoteMvpApp
         // Benutzerliste aus CSV-Datei laden
         private List<User> LoadUserListFromCsv(string csvFilePath)
         {
+           
             List<User> users = new List<User>();
-            using (var reader = new StreamReader(csvFilePath))
+            try
             {
-                while (!reader.EndOfStream)
+                using (var reader = new StreamReader(csvFilePath))
                 {
-                    string line = reader.ReadLine();
-                    string[] data = line.Split(',');
-                    string username = data[0];
-                    string password = data[1];
-                    User user = new User(username, password);
-                    users.Add(user);
+                    while (!reader.EndOfStream)
+                    {
+                        string line = reader.ReadLine();
+                        string[] data = line.Split(',');
+                        string username = data[0];
+                        string password = data[1];
+                        User user = new User(username, password);
+                        users.Add(user);
+                    }
                 }
+                
             }
+            catch (Exception e)
+            {
+                        
+            }
+
             return users;
         }
 

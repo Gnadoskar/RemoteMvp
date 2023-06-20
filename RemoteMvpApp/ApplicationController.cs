@@ -13,7 +13,8 @@ namespace RemoteMvpApp
         public ApplicationController(IActionEndpoint actionEndpoint)
         {
             // Create new Model
-            _users = new Userlist();
+            string filepath = Path.Combine("..", "..", "Registered_People.csv");
+            _users = new Userlist(filepath);
 
             // Link ActionEndpoint to local method
             _actionEndpoint = actionEndpoint;
