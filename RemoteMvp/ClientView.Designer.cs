@@ -102,7 +102,7 @@
             _adminCheck.TabIndex = 5;
             _adminCheck.Text = "Admin";
             _adminCheck.UseVisualStyleBackColor = true;
-            _adminCheck.CheckedChanged += _adminCheck_CheckedChanged;
+           
             // 
             // ClientView
             // 

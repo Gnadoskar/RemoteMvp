@@ -35,9 +35,8 @@ namespace RemoteMvpClient
             
         }
 
-        private async void OnLoginRequested(object? sender, Tuple<string, string,bool> e)
+        private async void OnLoginRequested(object? sender, Tuple<string, string> e)
         {
-            // zusätzliche bool for CheckBox
             RemoteActionRequest loginRequest = new RemoteActionRequest(ActionType.Login, e.Item1, e.Item2);
             await ProcessRequest(loginRequest);
         }
