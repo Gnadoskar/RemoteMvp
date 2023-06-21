@@ -19,6 +19,7 @@ namespace RemoteMvpApp
             // Link ActionEndpoint to local method
             _actionEndpoint = actionEndpoint;
             _actionEndpoint.OnActionPerformed += EndpointOnActionPerformed;
+            _users.GetUserList +=       
         }
 
 
@@ -96,7 +97,8 @@ namespace RemoteMvpApp
         {
             // get the userlist
             // write it to the listbox
-
+            _users.GetUserList();
+            // löst event aus 
 
         }
 

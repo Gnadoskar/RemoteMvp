@@ -15,13 +15,15 @@ namespace RemoteMvpApp
         RegistrationOk
     }
 
-    internal class Userlist
+    public class Userlist
     {
         // Interne Klasse zur Repräsentation eines Benutzers
         private record User(string UserName, string Password);
 
-        private List<User> _users;  // Liste der Benutzer
+        private List<User> _users;  // Liste der Benutzer      
         private string _csvFilePath;   // Pfad zur CSV-Datei
+
+        private event EventHandler <List<User>> UsersForAdmin;
 
         public Userlist(string csvFilePath)
         {
@@ -75,6 +77,18 @@ namespace RemoteMvpApp
             SaveUserListToCsv(_csvFilePath, _users);  // Leere Benutzerliste in CSV-Datei speichern
         }
 
+        public void GetUserList()
+        {            
+            List<User> usersForAdmin = LoadUserListFromCsv(_csvFilePath);
+
+            //Event -> ApplicationController übergibt List<user>
+
+            UsersForAdmin?.Invoke(this, usersForAdmin);
+
+            //return usersForAdmin;
+        }
+
+
         // Benutzerliste aus CSV-Datei laden
         private List<User> LoadUserListFromCsv(string csvFilePath)
         {
@@ -103,6 +117,13 @@ namespace RemoteMvpApp
 
             return users;
         }
+
+        //public List<User> GetUserList()
+        //{          
+
+        //    return _users;
+        //}
+
 
         // Benutzerliste in CSV-Datei speichern
         private void SaveUserListToCsv(string csvFilePath, List<User> userList)
