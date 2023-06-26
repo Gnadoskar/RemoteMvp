@@ -17,8 +17,9 @@ Task serverTask = server.RunActionEndPointAsync();  // Asynchronous (non-blockin
 // Client-side classes
 var client = new RemoteActionAdapter("localhost", 11000);
 var clientController = new ClientPresenter(client);
-clientController.OpenUI(false);
+clientController.OpenUI(true);
 
+//----True and False for AdminView or UserView or both
 
 var Admin = new RemoteActionAdapter("localhost", 11000);
 var AdminController = new AdminPresenter(Admin);

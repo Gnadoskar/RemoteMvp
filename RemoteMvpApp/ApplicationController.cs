@@ -19,7 +19,9 @@ namespace RemoteMvpApp
             // Link ActionEndpoint to local method
             _actionEndpoint = actionEndpoint;
             _actionEndpoint.OnActionPerformed += EndpointOnActionPerformed;
-            _users.GetUserList +=       
+
+            // Auf event subben
+            //_users.GetUserList +=  OnGetUserList;     
         }
 
 
@@ -95,9 +97,15 @@ namespace RemoteMvpApp
 
         private void Process_Admin(RemoteActionEndpoint handler, string username, string password)
         {
-            // get the userlist
-            // write it to the listbox
             _users.GetUserList();
+
+            // ist die userliste leer?
+
+            //handler.PerformActionResponse(handler.Handler, new RemoteActionResponse(ResponseType.Admin, {userList.ToString() ));
+            // + ResponseType Admin anlegen
+            // + userÖist.ToString (möglicherweise mit override überarbeiten)
+            // + switchcase falls die userliste leer ist!
+
             // löst event aus 
 
         }

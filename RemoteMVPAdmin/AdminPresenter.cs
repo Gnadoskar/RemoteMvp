@@ -57,11 +57,7 @@ namespace RemoteMVPAdmin
             {
                 _adminView.Show();
             }
-
-
         }
-
-
 
 
     }
