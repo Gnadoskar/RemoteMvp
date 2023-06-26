@@ -44,6 +44,8 @@ namespace RemoteMVPAdmin
                     _adminView.ShowErrorMessage(response.Message);
                     break;
                 case ResponseType.Success:
+                    //Model aufrufen -> UserList in Listbox
+                    
                     _adminView.ConnectionSuccess(response.Message);
                     break;
             }

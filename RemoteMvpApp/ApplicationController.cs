@@ -100,7 +100,7 @@ namespace RemoteMvpApp
                     break;
             }
         }
-
+        //--------------------Admin-----------------------------
         private void Process_Admin(RemoteActionEndpoint handler, string username, string password)
         {
               _usersForAdmin =  _usersClass.GetUserList();  //methode die die Userliste aus der Csv lädt, in der _userClass speichert und als Liste von Tuples zurück gibt
@@ -108,11 +108,12 @@ namespace RemoteMvpApp
             switch (_usersClass.ChekUserlistNotNull())  // überprüfung ob die Liste user beinhaltet
             {
                 case UserListActionResult.UserListIsNotNull:
+
                     Console.WriteLine("User List OK");
 
-                    string e = _usersForAdmin.ToString();
+                    string usersAsString = UserToString(_usersForAdmin);
 
-                    handler.PerformActionResponse(handler.Handler, new RemoteActionResponse(ResponseType.Success, $"{ _usersForAdmin.ToString()}" ));
+                    handler.PerformActionResponse(handler.Handler, new RemoteActionResponse(ResponseType.Success, $"{ usersAsString}" ));
                     break;
 
                 case UserListActionResult.UserListIsNull:
@@ -130,14 +131,14 @@ namespace RemoteMvpApp
 
         }
 
-        public override string ToString()
+        private string UserToString(List<Tuple<string,string >> userList)
         {
             string returnValue = null;
 
             foreach (var tuple in _usersForAdmin)
             {
 
-                returnValue += $"Name: {tuple.Item1},\t Passwort: {tuple.Item2}" + Environment.NewLine;
+                returnValue += $"Name: {tuple.Item1}, Passwort: {tuple.Item2}" + Environment.NewLine;
 
             }
 
