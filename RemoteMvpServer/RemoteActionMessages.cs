@@ -31,7 +31,8 @@ namespace RemoteMvpLib
     public enum ResponseType
     {
         Success,
-        Error
+        Error,
+        
     }
 
     public class RemoteActionResponse

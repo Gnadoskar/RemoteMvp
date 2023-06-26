@@ -35,6 +35,9 @@ namespace RemoteMVPAdmin
         {
             RemoteActionResponse response = await _adapter.PerformActionAsync(adminRequest);
 
+            //response auspacken!
+
+
             switch (response.Type)
             {
                 case ResponseType.Error:

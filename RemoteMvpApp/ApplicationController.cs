@@ -1,29 +1,35 @@
 ﻿using RemoteMvpLib;
+using System.Configuration;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace RemoteMvpApp
 {
     internal class ApplicationController
     {
         // Model 
-        private readonly Userlist _users;
+        private readonly Userlist _usersClass;
 
         // ActionEndpoint (to be called by the view)
         private readonly IActionEndpoint _actionEndpoint;
+
+        List<Tuple<string, string>> _usersForAdmin = new List<Tuple<string, string>>();
 
         public ApplicationController(IActionEndpoint actionEndpoint)
         {
             // Create new Model
             string filepath = Path.Combine("..", "..", "Registered_People.csv");
-            _users = new Userlist(filepath);
+            _usersClass = new Userlist(filepath);
 
             // Link ActionEndpoint to local method
             _actionEndpoint = actionEndpoint;
             _actionEndpoint.OnActionPerformed += EndpointOnActionPerformed;
+           // _usersClass.UsersForAdmin += OnUsersForAdmin;
 
             // Auf event subben
-            //_users.GetUserList +=  OnGetUserList;     
+            //_usersClass.GetUserList +=  OnGetUserList;     
         }
 
+       
 
         public void RunActionEndPoint() => _actionEndpoint.RunActionEndpoint();
 
@@ -59,7 +65,7 @@ namespace RemoteMvpApp
         
         private void Process_Login(RemoteActionEndpoint handler, string username, string password)
         {
-            switch (_users.LoginUser(username, password))
+            switch (_usersClass.LoginUser(username, password))
             {
                 case UserListActionResult.AccessGranted:
                     handler.PerformActionResponse(handler.Handler, new RemoteActionResponse(ResponseType.Success, $"Access granted for {username}."));
@@ -78,7 +84,7 @@ namespace RemoteMvpApp
 
         private void Process_Register(RemoteActionEndpoint handler, string username, string password)
         {
-            switch (_users.RegisterUser(username, password))
+            switch (_usersClass.RegisterUser(username, password))
             {
                 case UserListActionResult.UserAlreadyExists:
                     Console.WriteLine("Error registering: User already existing.");
@@ -97,20 +103,54 @@ namespace RemoteMvpApp
 
         private void Process_Admin(RemoteActionEndpoint handler, string username, string password)
         {
-            _users.GetUserList();
+              _usersForAdmin =  _usersClass.GetUserList();  //methode die die Userliste aus der Csv lädt, in der _userClass speichert und als Liste von Tuples zurück gibt
 
-            // ist die userliste leer?
+            switch (_usersClass.ChekUserlistNotNull())  // überprüfung ob die Liste user beinhaltet
+            {
+                case UserListActionResult.UserListIsNotNull:
+                    Console.WriteLine("User List OK");
+                    handler.PerformActionResponse(handler.Handler, new RemoteActionResponse(ResponseType.Success, $"{ _usersForAdmin.ToString()}" ));
+                    break;
 
-            //handler.PerformActionResponse(handler.Handler, new RemoteActionResponse(ResponseType.Admin, {userList.ToString() ));
-            // + ResponseType Admin anlegen
-            // + userÖist.ToString (möglicherweise mit override überarbeiten)
-            // + switchcase falls die userliste leer ist!
+                case UserListActionResult.UserListIsNull:
+                    Console.WriteLine("No UserList found!");
+                    handler.PerformActionResponse(handler.Handler, new RemoteActionResponse(ResponseType.Error, "Error, no Users found!"));
+                    break;
 
-            // löst event aus 
+                default:
+                    Console.WriteLine("Unknown action.");
+                    handler.PerformActionResponse(handler.Handler, new RemoteActionResponse(ResponseType.Error, "Unsupported operation."));
+                    break;
+                    
+
+            }   
 
         }
 
+        public override string ToString()
+        {
+            string returnValue = null;
 
+            foreach (var tuple in _usersForAdmin)
+            {
+
+                returnValue += $"Name: {tuple.Item1},\t Passwort: {tuple.Item2}" + Environment.NewLine;
+
+            }
+
+            return returnValue;
+        }
+
+
+    
+
+
+        //private void OnUsersForAdmin(object? sender, List<Userlist.User> userList)
+        //{
+        //    
+
+
+        //}
 
 
 

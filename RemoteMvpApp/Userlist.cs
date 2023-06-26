@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace RemoteMvpApp
 {
@@ -12,18 +13,20 @@ namespace RemoteMvpApp
         UserAlreadyExists,
         UserOkPasswordWrong,
         AccessGranted,
-        RegistrationOk
+        RegistrationOk,
+        UserListIsNull,
+        UserListIsNotNull
     }
 
     public class Userlist
     {
         // Interne Klasse zur Repräsentation eines Benutzers
-        private record User(string UserName, string Password);
-
+        public record User(string UserName, string Password);
+       
         private List<User> _users;  // Liste der Benutzer      
         private string _csvFilePath;   // Pfad zur CSV-Datei
 
-        private event EventHandler <List<User>> UsersForAdmin;
+       // public event EventHandler <List<User>> UsersForAdmin { get;set; }
 
         public Userlist(string csvFilePath)
         {
@@ -48,6 +51,23 @@ namespace RemoteMvpApp
 
             return UserListActionResult.UserNotExisting;  // Benutzer existiert nicht
         }
+
+        // Gibt es Benutzer?
+
+        public UserListActionResult ChekUserlistNotNull()
+        {
+            if(_users.Count == 0)
+            {
+                return UserListActionResult.UserListIsNull;
+
+            }
+
+            return UserListActionResult.UserListIsNotNull;
+        }
+
+
+
+
 
         // Benutzerregistrierung
         public UserListActionResult RegisterUser(string username, string password)
@@ -77,15 +97,33 @@ namespace RemoteMvpApp
             SaveUserListToCsv(_csvFilePath, _users);  // Leere Benutzerliste in CSV-Datei speichern
         }
 
-        public void GetUserList()
-        {            
-            List<User> usersForAdmin = LoadUserListFromCsv(_csvFilePath);
+        // Load User for Admin 
+        public List<Tuple<string, string>> GetUserList()
+        {
+            _users = LoadUserListFromCsv(_csvFilePath);
+
+          List<User> usersForAdmin = LoadUserListFromCsv(_csvFilePath);
+          List< Tuple<string,string> > userListreturn = new List<Tuple<string, string>>();          
+
+            foreach (var user in usersForAdmin)
+            {
+                try
+                {                   
+                    userListreturn.Add( Tuple.Create(user.UserName, user.Password) );
+                }
+                catch (Exception)
+                {
+                    userListreturn.Add(Tuple.Create("Error", "---"));
+
+                }  
+            }
+
+            return userListreturn;
 
             //Event -> ApplicationController übergibt List<user>
 
-            UsersForAdmin?.Invoke(this, usersForAdmin);
+            //UsersForAdmin?.Invoke(this, _usersForAdmin);
 
-            //return usersForAdmin;
         }
 
 
@@ -121,7 +159,7 @@ namespace RemoteMvpApp
         //public List<User> GetUserList()
         //{          
 
-        //    return _users;
+        //    return _usersClass;
         //}
 
 
@@ -162,16 +200,16 @@ namespace RemoteMvpApp
 //    internal class Userlist
 //    {
 //        private record User(string UserName, string Password);
-//        private readonly List<User> _users;
+//        private readonly List<User> _usersClass;
 
 //        public Userlist()
 //        {
-//            _users = new List<User>();
+//            _usersClass = new List<User>();
 //        }
 
 //        public UserListActionResult LoginUser(string username, string password)
 //        {
-//            foreach (var user in _users.Where(user => user.UserName.Equals(username)))
+//            foreach (var user in _usersClass.Where(user => user.UserName.Equals(username)))
 //            {
 //                if (user.Password.Equals(password))
 //                {
@@ -188,24 +226,24 @@ namespace RemoteMvpApp
 
 //        public UserListActionResult RegisterUser(string username, string password)
 //        {
-//            if (_users.Any(user => user.UserName.Equals(username)))
+//            if (_usersClass.Any(user => user.UserName.Equals(username)))
 //            {
 //                return UserListActionResult.UserAlreadyExists;
 //            }
 
 //            User newUser = new(username, password);
-//            _users.Add(newUser);
+//            _usersClass.Add(newUser);
 //            return UserListActionResult.RegistrationOk;
 //        }
 
 //        public void RemoveUser(string username)
 //        {
-//            _users.RemoveAll(user => user.UserName.Equals(username));
+//            _usersClass.RemoveAll(user => user.UserName.Equals(username));
 //        }
 
 //        public void RemoveAllUsers()
 //        {
-//            _users.Clear();
+//            _usersClass.Clear();
 //        }
 
 
