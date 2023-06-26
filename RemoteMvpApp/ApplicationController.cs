@@ -109,6 +109,9 @@ namespace RemoteMvpApp
             {
                 case UserListActionResult.UserListIsNotNull:
                     Console.WriteLine("User List OK");
+
+                    string e = _usersForAdmin.ToString();
+
                     handler.PerformActionResponse(handler.Handler, new RemoteActionResponse(ResponseType.Success, $"{ _usersForAdmin.ToString()}" ));
                     break;
 
