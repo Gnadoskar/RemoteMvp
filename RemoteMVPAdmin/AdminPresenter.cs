@@ -70,6 +70,14 @@ namespace RemoteMVPAdmin
                     
                     _adminView.ConnectionSuccess(response.Message);
                     break;
+
+                case ResponseType.SuccessDelete:
+                    _adminView.UpdateView(response.Message);
+                    break;
+
+                default:
+
+                    break;
             }
 
         }

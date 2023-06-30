@@ -67,26 +67,7 @@ namespace RemoteMvpApp
             }
         }
 
-        private void Process_AdminDelete(RemoteActionEndpoint handler, string userName, string password)
-        {
-            // den ausgewählten User von der Liste _UserList löschen
-            switch(_usersClass.DeleteUser(userName, password))
-            {
-                case UserListActionResult.SuccessfullyDeleted:
-                    handler.PerformActionResponse(handler.Handler, new RemoteActionResponse(ResponseType.Success, $"-User: {userName}, successfully deleted."));
-                    break;
-
-                case UserListActionResult.UnsuccessfulDeleted:
-                    handler.PerformActionResponse(handler.Handler, new RemoteActionResponse(ResponseType.Error, $"-User: {userName}, could not be deleted!"));
-                    break;
-
-                default:
-                    handler.PerformActionResponse(handler.Handler, new RemoteActionResponse(ResponseType.Error, "Unsupported action."));
-                    break;
-
-
-            }
-        }
+        
 
 
         private void Process_Login(RemoteActionEndpoint handler, string username, string password)
@@ -156,7 +137,33 @@ namespace RemoteMvpApp
             }   
 
         }
+        private void Process_AdminDelete(RemoteActionEndpoint handler, string userName, string password)
+        {
+            // den ausgewählten User von der Liste _UserList löschen
+            switch (_usersClass.DeleteUser(userName, password))
+            {
+                case UserListActionResult.SuccessfullyDeleted:
+                    Console.WriteLine($"-User: {userName}, successfully deleted.");
+                    //handler.PerformActionResponse(handler.Handler, new RemoteActionResponse(ResponseType.Success, $"-User: {userName}, successfully deleted."));
 
+                    string usersAsString = UserToString(_usersForAdmin);
+                    handler.PerformActionResponse(handler.Handler, new RemoteActionResponse(ResponseType.SuccessDelete, $"{usersAsString}"));
+
+                    break;
+
+                case UserListActionResult.UnsuccessfulDeleted:
+                    Console.WriteLine($"-User: {userName}, could not be deleted!");
+                    handler.PerformActionResponse(handler.Handler, new RemoteActionResponse(ResponseType.Error, $"-User: {userName}, could not be deleted!"));
+                    break;
+
+                default:
+                    Console.WriteLine("Unsupported action.");
+                    handler.PerformActionResponse(handler.Handler, new RemoteActionResponse(ResponseType.Error, "Unsupported action."));
+                    break;
+
+
+            }
+        }
         private string UserToString(List<Tuple<string,string >> userList)
         {
             string returnValue = null;

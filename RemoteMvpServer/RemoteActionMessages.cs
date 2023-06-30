@@ -33,7 +33,8 @@ namespace RemoteMvpLib
     {
         Success,
         Error,
-        
+        SuccessDelete
+
     }
 
     public class RemoteActionResponse

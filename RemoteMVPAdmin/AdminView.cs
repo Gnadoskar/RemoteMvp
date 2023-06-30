@@ -44,8 +44,25 @@ namespace RemoteMVPAdmin
                 _UserListBox.Items.Add(user);
 
             }
-
         }
+
+
+        internal void UpdateView(string? message)
+        {
+            MessageBox.Show("Successfully deleted the selected User as Admin", "Info", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+
+            _userForListBox = ConvertData(message);
+
+            _UserListBox.Items.Clear();
+
+            foreach (var user in _userForListBox)
+            {
+                _UserListBox.Items.Add(user);
+
+            }
+        }
+
+
         //-------------Converts Data for ListBox (View)-----------------
         private List<Tuple<string, string>> ConvertData(string userListString)
         {
@@ -96,7 +113,15 @@ namespace RemoteMVPAdmin
 
                     string[] splitString = selectedItem.Split(',');
 
-                    _selectedUserDelete = Tuple.Create(splitString[0].Trim(), splitString[1].Trim());
+
+                    Tuple<string, string> _deleteUser = Tuple.Create(splitString[0].Trim(), splitString[1].Trim());
+
+                    //--> weil die Strings folgendermaﬂen aussehen "Name: Oskar" und "Password: 123"
+
+                    string[] splitValueName = _deleteUser.Item1.Split(":");    
+                    string[] splitValuepassword = _deleteUser.Item2.Split(":");
+
+                    _selectedUserDelete = Tuple.Create(splitValueName[1].Trim(), splitValuepassword[1].Trim());
                 }
             }
 
@@ -136,5 +161,7 @@ namespace RemoteMVPAdmin
                 return false;
             }
         }
+
+       
     }
 }
