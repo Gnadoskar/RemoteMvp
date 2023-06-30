@@ -14,6 +14,10 @@ namespace RemoteMVPAdmin
         private AdminView _adminView;
         private AdminModel _adminModel;
 
+        private Tuple<string, string> _personToDelete;
+
+        private event EventHandler<EventArgs> PersonDeleted;
+
         public AdminPresenter(IActionAdapter adapter)
         {
             _adapter = adapter;
@@ -21,16 +25,34 @@ namespace RemoteMVPAdmin
             _adminView = new AdminView();
 
             _adminView.AdminRequested += OnAdminRequested;
-            
+            _adminView.AdminDeleted += OnAdminDeleted;
+            this.PersonDeleted += OnPersonDeleted;
             
         }
+       
+        //---------------------Delete Button-------------------------
 
+        private void OnAdminDeleted(object? sender, EventArgs e)
+        {
+            // selected Person von View 
+            _personToDelete = _adminView._selectedUserDelete;
+            PersonDeleted?.Invoke(this, EventArgs.Empty);
+        }
+
+        private async void OnPersonDeleted(object? sender, EventArgs e)
+        {
+            RemoteActionRequest AdminDelete = new RemoteActionRequest(ActionType.AdminDelete, _personToDelete.Item1, _personToDelete.Item2);
+            await ProcessRequest(AdminDelete);
+        }
+
+        //-------------------Connect Button-----------------------
         private async void OnAdminRequested(object? sender, EventArgs e)
         {
             RemoteActionRequest AdminRequest = new RemoteActionRequest(ActionType.Admin, "admin", "admin");
             await ProcessRequest(AdminRequest);
         }
 
+        //------------------------------------------------------------
         private async Task ProcessRequest(RemoteActionRequest adminRequest)
         {
             RemoteActionResponse response = await _adapter.PerformActionAsync(adminRequest);

@@ -58,11 +58,37 @@ namespace RemoteMvpApp
                 case ActionType.Admin:
                     Process_Admin(handler, request.UserName, request.Password);
                     break;
+
+                case ActionType.AdminDelete:
+                    Process_AdminDelete(handler,request.UserName, request.Password);
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException("Request not supported");
             }
         }
-        
+
+        private void Process_AdminDelete(RemoteActionEndpoint handler, string userName, string password)
+        {
+            // den ausgewählten User von der Liste _UserList löschen
+            switch(_usersClass.DeleteUser(userName, password))
+            {
+                case UserListActionResult.SuccessfullyDeleted:
+                    handler.PerformActionResponse(handler.Handler, new RemoteActionResponse(ResponseType.Success, $"-User: {userName}, successfully deleted."));
+                    break;
+
+                case UserListActionResult.UnsuccessfulDeleted:
+                    handler.PerformActionResponse(handler.Handler, new RemoteActionResponse(ResponseType.Error, $"-User: {userName}, could not be deleted!"));
+                    break;
+
+                default:
+                    handler.PerformActionResponse(handler.Handler, new RemoteActionResponse(ResponseType.Error, "Unsupported action."));
+                    break;
+
+
+            }
+        }
+
+
         private void Process_Login(RemoteActionEndpoint handler, string username, string password)
         {
             switch (_usersClass.LoginUser(username, password))

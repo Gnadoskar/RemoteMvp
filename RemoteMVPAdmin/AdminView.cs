@@ -8,7 +8,9 @@ namespace RemoteMVPAdmin
         // ---- event
 
         public event EventHandler AdminRequested;
+        public event EventHandler AdminDeleted;
         // --- member
+        public Tuple<string, string> _selectedUserDelete { get; set; }
 
         private List<Tuple<string, string>> _userForListBox = new List<Tuple<string, string>>();
 
@@ -17,12 +19,13 @@ namespace RemoteMVPAdmin
             InitializeComponent();
         }
 
+        //---------Connect Button-----------------------
         private void _btnConnect_Click(object sender, EventArgs e)
         {
             AdminRequested?.Invoke(this, EventArgs.Empty);
         }
 
-        //---------Message Box----------
+        //---------Message Box and List Update (if Success)
         public void ShowErrorMessage(string message)
         {
             MessageBox.Show(message, "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -43,7 +46,7 @@ namespace RemoteMVPAdmin
             }
 
         }
-
+        //-------------Converts Data for ListBox (View)-----------------
         private List<Tuple<string, string>> ConvertData(string userListString)
         {
             List<Tuple<string, string>> userConverted = new List<Tuple<string, string>>();
@@ -83,8 +86,55 @@ namespace RemoteMVPAdmin
         //------------Delete Button-------------
 
         private void _btnDeleteUser_Click(object sender, EventArgs e)
-        {
+        {    
 
+            if(ListViewNotEmpty())
+            {
+                if(OnlyOnePersonSelected())
+                {
+                    string selectedItem = _UserListBox.SelectedItem.ToString();
+
+                    string[] splitString = selectedItem.Split(',');
+
+                    _selectedUserDelete = Tuple.Create(splitString[0].Trim(), splitString[1].Trim());
+                }
+            }
+
+           AdminDeleted?.Invoke(this, EventArgs.Empty);
+
+
+        }
+
+        private bool OnlyOnePersonSelected()
+        {
+            if(_UserListBox.SelectedItems.Count == 1)
+            {
+                return true;
+            }
+            else if(_UserListBox.SelectedItems.Count > 1)
+            {
+                MessageBox.Show("Please select only 1 person for details", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return false;
+            }
+            else
+            {
+                MessageBox.Show("No Person selected!", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return false;
+            }
+        }
+
+
+        private bool ListViewNotEmpty()
+        {
+            if(_UserListBox.Items.Count >0)
+            {
+                return true;
+            }
+            else
+            {
+                MessageBox.Show("Error, Please click on the Connect Button!", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return false;
+            }
         }
     }
 }

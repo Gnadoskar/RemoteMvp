@@ -15,7 +15,11 @@ namespace RemoteMvpApp
         AccessGranted,
         RegistrationOk,
         UserListIsNull,
-        UserListIsNotNull
+        UserListIsNotNull,
+        SuccessfullyDeleted,
+        UnsuccessfulDeleted
+
+
     }
 
     public class Userlist
@@ -52,6 +56,22 @@ namespace RemoteMvpApp
             return UserListActionResult.UserNotExisting;  // Benutzer existiert nicht
         }
 
+        public UserListActionResult DeleteUser(string username, string passowrd)
+        {
+            foreach(var user in _users) 
+            {
+                if (user.UserName.Equals(username))
+                {
+                    _users.Remove(user);
+                    return UserListActionResult.SuccessfullyDeleted;
+                } 
+            }
+
+            return UserListActionResult.UnsuccessfulDeleted;
+        }
+
+
+
         // Gibt es Benutzer?
 
         public UserListActionResult ChekUserlistNotNull()
@@ -64,8 +84,6 @@ namespace RemoteMvpApp
 
             return UserListActionResult.UserListIsNotNull;
         }
-
-
 
 
 

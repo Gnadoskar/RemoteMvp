@@ -7,7 +7,8 @@ namespace RemoteMvpLib
         Register,
         Login,
         Logout,
-        Admin
+        Admin,
+        AdminDelete
     }
 
     public class RemoteActionRequest
