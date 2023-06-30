@@ -76,8 +76,8 @@ namespace RemoteMvpLib
                 Console.WriteLine(e.ToString());
             }
 
-            Console.WriteLine("\n Press any key to continue...");
-            Console.ReadKey();
+            //Console.WriteLine("\n Press any key to continue...");
+            //Console.ReadKey();
         }
 
         public void PerformActionResponse(Socket handler, RemoteActionResponse response)

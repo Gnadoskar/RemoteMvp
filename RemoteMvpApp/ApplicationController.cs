@@ -139,14 +139,17 @@ namespace RemoteMvpApp
         }
         private void Process_AdminDelete(RemoteActionEndpoint handler, string userName, string password)
         {
-            // den ausgewählten User von der Liste _UserList löschen
+            //UserListActionResult resultDelete = _usersClass.DeleteUser(userName, password);  // den ausgewählten User von der Liste _UserList löschen
+            
+            //_usersForAdmin = _usersClass.GetUserList();                                     //die aktuellste userlist holen
+            
             switch (_usersClass.DeleteUser(userName, password))
             {
                 case UserListActionResult.SuccessfullyDeleted:
                     Console.WriteLine($"-User: {userName}, successfully deleted.");
                     //handler.PerformActionResponse(handler.Handler, new RemoteActionResponse(ResponseType.Success, $"-User: {userName}, successfully deleted."));
 
-                    string usersAsString = UserToString(_usersForAdmin);
+                    string usersAsString = UserToString(_usersClass.GetUserList());
                     handler.PerformActionResponse(handler.Handler, new RemoteActionResponse(ResponseType.SuccessDelete, $"{usersAsString}"));
 
                     break;
@@ -168,7 +171,7 @@ namespace RemoteMvpApp
         {
             string returnValue = null;
 
-            foreach (var tuple in _usersForAdmin)
+            foreach (var tuple in userList)
             {
 
                 returnValue += $"Name: {tuple.Item1}, Passwort: {tuple.Item2}" + Environment.NewLine;

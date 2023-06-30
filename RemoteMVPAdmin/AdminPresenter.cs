@@ -59,7 +59,6 @@ namespace RemoteMVPAdmin
 
             //response auspacken!
 
-
             switch (response.Type)
             {
                 case ResponseType.Error:
@@ -67,7 +66,7 @@ namespace RemoteMVPAdmin
                     break;
                 case ResponseType.Success:
                     //Model aufrufen -> UserList in Listbox
-                    
+
                     _adminView.ConnectionSuccess(response.Message);
                     break;
 

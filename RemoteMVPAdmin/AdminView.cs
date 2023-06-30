@@ -50,10 +50,9 @@ namespace RemoteMVPAdmin
         internal void UpdateView(string? message)
         {
             MessageBox.Show("Successfully deleted the selected User as Admin", "Info", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-
-            _userForListBox = ConvertData(message);
-
             _UserListBox.Items.Clear();
+
+            _userForListBox = ConvertData(message);            
 
             foreach (var user in _userForListBox)
             {
@@ -122,12 +121,11 @@ namespace RemoteMVPAdmin
                     string[] splitValuepassword = _deleteUser.Item2.Split(":");
 
                     _selectedUserDelete = Tuple.Create(splitValueName[1].Trim(), splitValuepassword[1].Trim());
+
+
+                    AdminDeleted?.Invoke(this, EventArgs.Empty);
                 }
-            }
-
-           AdminDeleted?.Invoke(this, EventArgs.Empty);
-
-
+            } 
         }
 
         private bool OnlyOnePersonSelected()
