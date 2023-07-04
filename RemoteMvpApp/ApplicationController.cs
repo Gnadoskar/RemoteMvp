@@ -179,18 +179,7 @@ namespace RemoteMvpApp
             }
 
             return returnValue;
-        }
-
-
-    
-
-
-        //private void OnUsersForAdmin(object? sender, List<Userlist.User> userList)
-        //{
-        //    
-
-
-        //}
+        }     
 
 
 

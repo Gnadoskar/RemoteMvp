@@ -8,5 +8,15 @@ namespace RemoteMVPAdmin
 {
     internal class AdminModel
     {
+        public event EventHandler ModelUpdated;
+
+        public string UserList { get; set; }
+
+        internal void SavaData(string? message)
+        {
+            UserList = message;
+
+            ModelUpdated?.Invoke(this, EventArgs.Empty);
+        }
     }
 }

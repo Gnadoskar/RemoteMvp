@@ -27,6 +27,8 @@ namespace RemoteMVPAdmin
             _adminView.AdminRequested += OnAdminRequested;
             _adminView.AdminDeleted += OnAdminDeleted;
             this.PersonDeleted += OnPersonDeleted;
+
+            _adminModel.ModelUpdated += OnModelUpdated;
             
         }
        
@@ -65,9 +67,9 @@ namespace RemoteMVPAdmin
                     _adminView.ShowErrorMessage(response.Message);
                     break;
                 case ResponseType.Success:
-                    //Model aufrufen -> UserList in Listbox
-
-                    _adminView.ConnectionSuccess(response.Message);
+                    //Model aufrufen -> UserList Speichern
+                    _adminModel.SavaData(response.Message);
+                    
                     break;
 
                 case ResponseType.SuccessDelete:
@@ -80,6 +82,14 @@ namespace RemoteMVPAdmin
             }
 
         }
+
+        private void OnModelUpdated(object? sender, EventArgs e)
+        {
+            //UserListe wurde geUpdated -> Event -> View
+
+            _adminView.ConnectionSuccess(_adminModel.UserList);
+        }
+
 
         public void OpenUI(bool isModal)
         {
